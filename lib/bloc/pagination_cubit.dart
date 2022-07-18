@@ -127,8 +127,9 @@ class PaginationCubit extends Cubit<PaginationState> {
     List<QueryDocumentSnapshot> newList,
   ) {
     final prevIds = previousList.map((prevSnapshot) => prevSnapshot.id).toSet();
-    newList.retainWhere((newSnapshot) => prevIds.add(newSnapshot.id));
-    return previousList + newList;
+    final clonedNewList = [...newList]
+      ..retainWhere((newSnapshot) => prevIds.add(newSnapshot.id));
+    return previousList + clonedNewList;
   }
 
   Query _getQuery() {
